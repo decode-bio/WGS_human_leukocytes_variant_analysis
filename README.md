@@ -39,13 +39,6 @@ As the data does not contain the adapter contamination, also the alignment (HISA
 Still for comparision lets run Trimmomatic and compare the trimmed and untrimmed results to get a clear idea.
 * Trimmomatic
 ```
-Trimmomatic=/usr/share/java/trimmomatic-0.39.jar
-read1=/home/sne_desh/rna_seq/P3/SRR34149094_1.fastq
-read2=/home/sne_desh/rna_seq/P3/SRR34149094_2.fastq
-OP_read1_P=/home/sne_desh/rna_seq/P3/SRR34149094_1_paired.fastq
-OP_read1_U=/home/sne_desh/rna_seq/P3/SRR34149094_1_unpaired.fastq
-OP_read2_P=/home/sne_desh/rna_seq/P3/SRR34149094_2_paired.fastq
-OP_read2_U=/home/sne_desh/rna_seq/P3/SRR34149094_2_unpaired.fastq
 
 java -jar $Trimmomatic PE $read1 $read2 \
 $OP_read1_P $OP_read1_U $OP_read2_P $OP_read2_U\
@@ -53,6 +46,12 @@ ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 \
   LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 ```
 ![image](https://github.com/user-attachments/assets/22c0029b-2b1c-4350-ab11-7fbcf024b5b7)
+
+* QC report after trimming
+![image](https://github.com/user-attachments/assets/11571411-ca27-4892-92ad-69c1c4f3f57e)
+![image](https://github.com/user-attachments/assets/35af96a5-57d2-4cc3-8f31-a0b52a92b250)
+
+* On comparing both the reports, it is clearly seen that the sequence base lenght has been reduced, which will increase the false positive alignment. So I will proceed further with the untrimmed fastq files for the downstream analysis. Lets align our data to the genome using HISAT2.
 
 
 
