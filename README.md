@@ -53,6 +53,22 @@ ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 \
 
 * On comparing both the reports, it is clearly seen that the sequence base lenght has been reduced, which will increase the false positive alignment. So I will proceed further with the untrimmed fastq files for the downstream analysis. Lets align our data to the genome using HISAT2.
 
+# Step4: Alignment using HISAT2
+Now after QC, we proceed with our original reads and run alignment with HISAT2. For this step the HISAT2 and genome index has already been downloaded.
+```
+/usr/bin/hisat2 -q -x /home/sne_desh/HISAT2/grch38/genome -1 /home/sne_desh/WGS/P1/SRR34149094_1.fastq -2 /home/sne_desh/WGS/P1/SRR34149094_2.fastq -S SRR34149094.sam
+```
+<img width="1815" height="358" alt="image" src="https://github.com/user-attachments/assets/e5e5d2b9-50d0-40b0-af5c-009ffb35fb07" />
+Our Overall alignement rate is 95.46% which is a good alignment rate and it suggest that our library is free from contamination or adapter issue. Now we get our aligned read in .sam format. Lets continue with the next step to do sorting and duplicate removal.
+
+# Step 5: Sorting and duplicate removal using samtools
+* Why Sort BAM Files?
+- Sorting aligns reads by genomic coordinates, which is essential for indexing and efficient retrieval.
+- Many downstream tools—such as variant callers (GATK), quantifiers (featureCounts), and genome browsers (IGV) require coordinate-sorted BAM files to function correctly.
+- A sorted BAM reduces memory overhead during region-based queries, since alignments for any locus are grouped together on disk.
+* What Duplicate Removal Does?
+- Duplicate removal filters out PCR or optical duplicates—reads that originate from the same original DNA fragment but were sequenced multiple times.
+- Leaving duplicates in your data can inflate read counts at certain loci, biasing expression estimates or variant allele frequencies.
 
 
 
