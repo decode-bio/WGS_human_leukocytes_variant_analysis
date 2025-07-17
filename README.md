@@ -5,7 +5,6 @@
 * Trimmomatic
 * Hisat2
 * SAMTOOLS
-* SUBREAD
 * GATK
 * ANNOVAR
 
@@ -85,7 +84,17 @@ samtools index SRR34149094_sorted.bam
 ```
 Output
 <img width="1778" height="151" alt="image" src="https://github.com/user-attachments/assets/33b518bc-9241-4c97-8d0f-3cdbf6be781c" />
-Now I am done with the sorting and removal of duplicate and indexing of my bam file. lets go to the next step i.e. feature count.
+Now I am done with the sorting and removal of duplicate and indexing of my bam file. lets go to the next lets check the statistics of our aligned reads.
+
+* Statistics of the Aligned reads
+```
+samtools flagstat SRR34149094_sorted.bam
+```
+<img width="900" height="390" alt="image" src="https://github.com/user-attachments/assets/27a97554-bedf-403d-b852-b29a3a4a6d99" />
+Overall mapping is 96.38%, which indicates that our sample matches the reference & library preparedness was clean.
+
+# step 6: Variant calling using GATK
+
 
 # step 6: Feature counts
 As for performing the feature counts we will be needing the SUBREAD, so first lets install the feature count to our sysytem by writing the simple command.
