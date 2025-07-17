@@ -5,6 +5,7 @@
 * Trimmomatic
 * Hisat2
 * SAMTOOLS
+* SUBREAD
 * GATK
 * ANNOVAR
 
@@ -70,5 +71,29 @@ Our Overall alignement rate is 95.46% which is a good alignment rate and it sugg
 - Duplicate removal filters out PCR or optical duplicates—reads that originate from the same original DNA fragment but were sequenced multiple times.
 - Leaving duplicates in your data can inflate read counts at certain loci, biasing expression estimates or variant allele frequencies.
 
+Conversion from .sam to .bam
+```
+samtools -b -S SRR34149094.sam > SRR34149094.bam
+```
+Sorting the unsorted .bam file
+```
+samtools sort -o SRR34149094_sorted.bam SRR34149094.bam
+```
+Indexing the sorted .bam file
+```
+samtools index SRR34149094_sorted.bam
+```
+Output
+<img width="1778" height="151" alt="image" src="https://github.com/user-attachments/assets/33b518bc-9241-4c97-8d0f-3cdbf6be781c" />
+Now I am done with the sorting and removal of duplicate and indexing of my bam file. lets go to the next step i.e. feature count.
 
+# step 6: Feature counts
+As for performing the feature counts we will be needing the SUBREAD, so first lets install the feature count to our sysytem by writing the simple command.
+```
+sudo apt install subread
+```
+OUTPUT
+<img width="1180" height="416" alt="image" src="https://github.com/user-attachments/assets/69ee5911-b0df-4131-9235-031964bdd4d9" />
+
+Now lets perform the feature counts
 
