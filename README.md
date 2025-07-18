@@ -96,13 +96,5 @@ Overall mapping is 96.38%, which indicates that our sample matches the reference
 # step 6: Variant calling using GATK
 
 
-# step 6: Feature counts
-As for performing the feature counts we will be needing the SUBREAD, so first lets install the feature count to our sysytem by writing the simple command.
-```
-sudo apt install subread
-```
-OUTPUT
-<img width="1180" height="416" alt="image" src="https://github.com/user-attachments/assets/69ee5911-b0df-4131-9235-031964bdd4d9" />
 
-Now lets perform the feature counts
 
