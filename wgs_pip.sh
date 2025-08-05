@@ -20,42 +20,54 @@
 #OP_read2_P=/home/sne_desh/WGS/P1/SRR34149094_1_P.fastq
 #OP_read2_U=/home/sne_desh/WGS/P1/SRR34149094_1_U.fastq
 
-#java -jar $Trimmomatic PE $read1 $read2 $OP_read1_P $OP_read1_U $OP_read2_P $OP_read2_U \
+#java -jar $Trimmomatic PE $read1 $read2 $OP_read1_P $OP_read1_U $OP_read2_P #$OP_read2_U \
 #ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 
 # Note: After comparing the both trimmed and untrimmed sequences quality it seems to me that the untrimmed sequence is fine to proceed further.
 
-# Step4: Hisat2 alignement
+# Step4: As I am doing the WGS, so we use the BWA alignement
 
-#/usr/bin/hisat2 -q -x /home/sne_desh/HISAT2/grch38/genome -1 /home/sne_desh/WGS/P1/SRR34149094_1.fastq -2 /home/sne_desh/WGS/P1/SRR34149094_2.fastq \
- #-S SRR34149094.sam
+#After installing bwa and downloading the reference genome and indexing it.
 
-# The output showing as terminated, because of the RAM, I have been using 8 GB but it required more. Lets just wait\
-# till I get new RAM get installed.
+#bwa mem \
+#/home/sne_desh/Ref/Homo_sapiens_assembly38.fasta \
+#/home/sne_desh/WGS/P1/SRR34149094_1.fastq \
+#/home/sne_desh/WGS/P1/SRR34149094_2.fastq \
+#> aligned.sam
 
-# sucessufully run the alignement after expanding the RAM (Finally after two weeks).
 
 # Step 5: Samtool and duplicate removal
 
 # lets convert samfile to bam first.
-#samtools view -b -S SRR34149094.sam > SRR34149094_unsorted.bam
+# samtools view -b -S aligned.sam > aligned_unsorted.bam
 
 # lets convert unsorted bam to sorted bam
-# samtools sort -o SRR34149094_sorted.bam SRR34149094_unsorted.bam
+# samtools sort -n -o aligned_sorted.bam aligned_unsorted.bam
 
-# lets index the sorted bamfiles
+#Fix mate-pair information
 
-# samtools index  SRR34149094_sorted.bam
+# samtools fixmate -m aligned_sorted.bam aligned_sorted.fixmate.bam
+
+
+# sort by genomic coordinates
+# samtools sort -o aligned_position.fixmate.bam aligned_sorted.fixmate.bam
+
+# mark and remove duplicates
+# samtools markdup -r aligned_position.fixmate.bam aligned_sorted.rm.bam
+
+# lets index the final sorted bamfiles
+
+# samtools index  aligned_sorted.rm.bam
 
 # Statistics of Aligned reads
-# samtools flagstat SRR34149094_sorted.bam
+# samtools flagstat aligned_sorted.rm.bam
 
 # Step 6: Variant calling using GATK
-ref=/home/sne_desh/Ref/Homo_sapiens_grch38.fa
-python3 ~/Tools/gatk-4.6.2.0/gatk \
-   --java-options "-Xmx4g" HaplotypeCaller  \
-   -R $ref \
-   -I SRR34149094_sorted.bam \
-   -O SRR34149094.g.vcf.gz \
-   -ERC GVCF
+#ref=/home/sne_desh/Ref/Homo_sapiens_grch38.fa
+#python3 ~/Tools/gatk-4.6.2.0/gatk \
+  # --java-options "-Xmx4g" HaplotypeCaller  \
+  # -R $ref \
+   #-I aligned_sorted.rm.bam\
+   #-O SRR34149094.g.vcf.gz \
+  # -ERC GVCF
 
