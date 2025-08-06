@@ -90,12 +90,12 @@ samtools sort -o aligned_position.fixmate.bam aligned_sorted.fixmate.bam
 ```
 Mark and remove duplicates
 ```
-samtools markdup -r aligned_position.fixmate.bam aligned_position.rm.bam
+samtools markdup -r aligned_position.fixmate.bam aligned_sorted.rm.bam
 ```
 
 Indexing the final sorted bam file
 ```
-samtools index aligned_position.rm.bam
+samtools index aligned_sorted.rm.bam
 ```
 Output
 <img width="1671" height="152" alt="image" src="https://github.com/user-attachments/assets/59cefcb5-8943-458f-a984-6d1d77fb3010" />
@@ -104,13 +104,36 @@ Now I am done with the sorting and removal of duplicate and indexing of my bam f
 
 * Statistics of the Aligned reads
 ```
-samtools flagstat aligned_position.rm.bam
+samtools flagstat aligned_sorted.rm.bam
 ```
 <img width="1114" height="437" alt="image" src="https://github.com/user-attachments/assets/bb62a48b-20eb-4fcc-bc51-d8bec5e7acc4" />
 
 Overall mapping is 99.73%, which indicates that our sample matches the reference & library preparedness was clean.
 
-# step 6: Variant calling using GATK
+# Step 6: Variant calling using GATK
+Now before going Forward wth variant calling, I checked for
+* Sample name
+* Header
+As my ``` aligned_sorted.bam ``` neither contains sample_name nor header. So before diving into the variant calling the following steps has been performed.
+
+```
+python3 ~/Tools/gatk-4.6.2.0/gatk AddOrReplaceReadGroups \
+-I aligned_sorted.rm.bam \
+-O output_RG.bam \
+    -RGID H0164.2 \
+    -RGLB library1 \
+    -RGPL illumina \
+    -RGPU H0164ALXX140820.2 \
+    -RGSM sample1
+
+```
+Now have to indexed the output file again
+```
+samtools index output_RG.bam
+```
+Now lets perform the GATK variant calling 
+```
+
 
 
 
