@@ -142,6 +142,7 @@ python3 ~/Tools/gatk-4.6.2.0/gatk \
 ```
 <img width="1911" height="469" alt="image" src="https://github.com/user-attachments/assets/a222cf8f-5bf3-4be5-958b-92fe2185347b" />
 <img width="1810" height="999" alt="image" src="https://github.com/user-attachments/assets/8a0f6550-84a2-4154-870b-01fc859767b2" />
+<img width="1910" height="1012" alt="image" src="https://github.com/user-attachments/assets/84b30525-cd1b-48d5-baf7-f102aba77029" />
 
 
 
