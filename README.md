@@ -133,6 +133,17 @@ samtools index output_RG.bam
 ```
 Now lets perform the GATK variant calling 
 ```
+python3 ~/Tools/gatk-4.6.2.0/gatk \
+  --java-options "-Xmx8g" HaplotypeCaller  \
+  -R $ref \
+  -I output_RG.bam \
+  -O Output.vcf \
+  -ERC GVCF 
+```
+<img width="1911" height="469" alt="image" src="https://github.com/user-attachments/assets/a222cf8f-5bf3-4be5-958b-92fe2185347b" />
+<img width="1810" height="999" alt="image" src="https://github.com/user-attachments/assets/8a0f6550-84a2-4154-870b-01fc859767b2" />
+
+
 
 
 
