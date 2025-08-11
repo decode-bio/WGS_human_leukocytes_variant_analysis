@@ -87,7 +87,7 @@ Now we get our aligned read in .sam format. Lets continue with the next step to 
 
 Conversion from .sam to .bam
 ```
-samtools -b -S aligned.sam > aligned_unsorted.bam
+samtools -b -S aligned_output.sam > aligned_unsorted.bam
 ```
 Sorting the unsorted .bam file
 ```
@@ -103,23 +103,30 @@ samtools sort -o aligned_position.fixmate.bam aligned_sorted.fixmate.bam
 ```
 Mark and remove duplicates
 ```
-samtools markdup -r aligned_position.fixmate.bam aligned_sorted.rm.bam
+samtools markdup -r aligned_position.fixmate.bam aligned_final.bam
 ```
 
 Indexing the final sorted bam file
 ```
-samtools index aligned_sorted.rm.bam
+samtools index aligned_final.bam
 ```
 Output
-<img width="1671" height="152" alt="image" src="https://github.com/user-attachments/assets/59cefcb5-8943-458f-a984-6d1d77fb3010" />
+<img width="1888" height="124" alt="image" src="https://github.com/user-attachments/assets/034e7305-6f81-4a27-add7-556fed6050c4" />
+
+```
+samtools view aligned_final.bam | less
+```
+<img width="1906" height="953" alt="image" src="https://github.com/user-attachments/assets/4ce89ce2-472e-4aa2-a7da-5084ddec3e8c" />
+
 
 Now I am done with the sorting and removal of duplicate and indexing of my bam file. lets go to the next lets check the statistics of our aligned reads.
 
 * Statistics of the Aligned reads
 ```
-samtools flagstat aligned_sorted.rm.bam
+samtools flagstat aligned_final.bam
 ```
-<img width="1114" height="437" alt="image" src="https://github.com/user-attachments/assets/bb62a48b-20eb-4fcc-bc51-d8bec5e7acc4" />
+<img width="1117" height="449" alt="image" src="https://github.com/user-attachments/assets/22588c43-8ff5-457c-ba8f-0e0026dc5bb0" />
+
 
 Overall mapping is 99.73%, which indicates that our sample matches the reference & library preparedness was clean.
 
