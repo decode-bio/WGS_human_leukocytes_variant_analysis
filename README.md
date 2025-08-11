@@ -67,6 +67,13 @@ samtools view aligned_output.sam | less
 ```
 <img width="1907" height="989" alt="image" src="https://github.com/user-attachments/assets/eaee39a4-bfe9-4f05-b277-f77bbafa76dd" />
 
+Lets see the statistics of our output
+```
+samtools flagstat aligned_output.sam
+```
+<img width="1144" height="437" alt="image" src="https://github.com/user-attachments/assets/41d51bf7-649a-43f2-836e-2812cd9083b0" />
+
+
 Now we get our aligned read in .sam format. Lets continue with the next step to do sorting and duplicate removal.
 
 # Step 5: Sorting and duplicate removal using samtools
