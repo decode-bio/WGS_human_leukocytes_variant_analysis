@@ -55,13 +55,19 @@ ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 \
 # Step4: Alignment using BWA
 Now after QC, we proceed with our original reads and run alignment using BWA. For this step reference genome assembly is already been downloaded and indexed.
 ```
-bwa mem  /home/sne_desh/Ref/Homo_sapiens_assembly38.fasta  /home/sne_desh/WGS/P1/SRR34149094_1.fastq  /home/sne_desh/WGS/P1/SRR34149094_2.fastq > aligned.sam
+bwa mem -t 4 -R "@RG\tID:SRR34149094\tPL:ILLUMINA\tSM:SRR34149094" \
+/home/sne_desh/Ref/Homo_sapiens_assembly38.fasta \
+/home/sne_desh/WGS/P1/SRR34149094_1.fastq  /home/sne_desh/WGS/P1/SRR34149094_2.fastq > aligned_output.sam
 ```
-<img width="1587" height="959" alt="image" src="https://github.com/user-attachments/assets/1c093ecb-38da-4132-b376-6517109c1ec2" />
-<img width="1896" height="718" alt="image" src="https://github.com/user-attachments/assets/83d45197-b3a9-4d8f-99ef-7ae77df9f275" />
+<img width="1912" height="912" alt="image" src="https://github.com/user-attachments/assets/f3e3f439-825e-4acc-8f4e-87dab4824832" />
 
+Lets see the file contents using samtools before proceeding to further steps
+```
+samtools view aligned_output.sam | less
+```
+<img width="1907" height="989" alt="image" src="https://github.com/user-attachments/assets/eaee39a4-bfe9-4f05-b277-f77bbafa76dd" />
 
-Our Overall alignement took total 2.77 hrs. Now we get our aligned read in .sam format. Lets continue with the next step to do sorting and duplicate removal.
+Now we get our aligned read in .sam format. Lets continue with the next step to do sorting and duplicate removal.
 
 # Step 5: Sorting and duplicate removal using samtools
 * Why Sort BAM Files?
