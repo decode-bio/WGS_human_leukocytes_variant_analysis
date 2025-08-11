@@ -134,6 +134,16 @@ Overall mapping is 99.73%, which indicates that our sample matches the reference
 Now before going Forward wth variant calling, I checked for
 * Sample name
 * Header
+```
+samtools view aligned_final.bam | less
+```
+<img width="1528" height="811" alt="image" src="https://github.com/user-attachments/assets/8b10f7c0-1c8c-4e82-995a-15a0f6f2265d" />
+
+```
+samtools view -H aligned_final.bam | grep '^@RG'
+```
+<img width="1131" height="50" alt="image" src="https://github.com/user-attachments/assets/1f2f2ef4-30f5-46ce-a820-ae03562fa3c4" />
+
 As my ``` aligned_sorted.bam ``` neither contains sample_name nor header. So before diving into the variant calling the following steps has been performed.
 
 ```
