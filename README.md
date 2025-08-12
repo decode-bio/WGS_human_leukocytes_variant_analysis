@@ -144,23 +144,8 @@ samtools view -H aligned_final.bam | grep '^@RG'
 ```
 <img width="1131" height="50" alt="image" src="https://github.com/user-attachments/assets/1f2f2ef4-30f5-46ce-a820-ae03562fa3c4" />
 
-As my ``` aligned_sorted.bam ``` neither contains sample_name nor header. So before diving into the variant calling the following steps has been performed.
+As my ``` aligned_final.bam ``` contains both sample_name and header. So we can  dive into the variant calling using GATK.
 
-```
-python3 ~/Tools/gatk-4.6.2.0/gatk AddOrReplaceReadGroups \
--I aligned_sorted.rm.bam \
--O output_RG.bam \
-    -RGID H0164.2 \
-    -RGLB library1 \
-    -RGPL illumina \
-    -RGPU H0164ALXX140820.2 \
-    -RGSM sample1
-
-```
-Now have to indexed the output file again
-```
-samtools index output_RG.bam
-```
 Now lets perform the GATK variant calling 
 ```
 python3 ~/Tools/gatk-4.6.2.0/gatk \
@@ -170,9 +155,10 @@ python3 ~/Tools/gatk-4.6.2.0/gatk \
   -O Output.vcf \
   -ERC GVCF 
 ```
-<img width="1911" height="469" alt="image" src="https://github.com/user-attachments/assets/a222cf8f-5bf3-4be5-958b-92fe2185347b" />
-<img width="1810" height="999" alt="image" src="https://github.com/user-attachments/assets/8a0f6550-84a2-4154-870b-01fc859767b2" />
-<img width="1910" height="1012" alt="image" src="https://github.com/user-attachments/assets/84b30525-cd1b-48d5-baf7-f102aba77029" />
+<img width="1911" height="1010" alt="image" src="https://github.com/user-attachments/assets/60cd343f-0d33-48da-9e79-22dab745530b" />
+
+<img width="1919" height="1015" alt="image" src="https://github.com/user-attachments/assets/01efea88-42cb-4f2a-b45a-5fd4acf67423" />
+
 
 
 
