@@ -6,6 +6,8 @@
 * BWA
 * SAMTOOLS
 * GATK
+* BCFTOOLS
+* SNPEFF
 
 # About Data
 
@@ -151,7 +153,7 @@ Now lets perform the GATK variant calling
 python3 ~/Tools/gatk-4.6.2.0/gatk \
   --java-options "-Xmx8g" HaplotypeCaller  \
   -R $ref \
-  -I output_RG.bam \
+  -I aligned_final.bam \
   -O Output.vcf \
   -ERC GVCF 
 ```
@@ -159,10 +161,35 @@ python3 ~/Tools/gatk-4.6.2.0/gatk \
 
 <img width="1919" height="1015" alt="image" src="https://github.com/user-attachments/assets/01efea88-42cb-4f2a-b45a-5fd4acf67423" />
 
+Now before separating the variants, lets count the variants in the .vcf file using the bcf tools
+```
+bcftools +counts Output.vcf
+```
+<img width="1549" height="171" alt="image" src="https://github.com/user-attachments/assets/6fb5776b-d163-47c0-bf8d-5bef112e944f" />
+Now lets separate the snps and Indels into two different files. For separating we can either use GATK's Selectvariants or bcftools. Here I am using the bcfstools to separate the variants.
 
+* SNP
 
+```
+bcftools view -v snps Output.vcf -O v -o Output_snp.vcf
+```
 
+* INDEL
 
+```
+bcftools view -v indels Output.vcf -O v -o Output_indels.vcf
+```
+
+Step 7: Variant Annotation
+Now lets performe the variant annotation using the snpEff tool.
+```
+snpEff -v -stats report.html hg38 output.vcf>annotated.vcf
+```
+The code will generate the three files
+* annotated.vcf
+* report.html
+* report.genes.txt
+<img width="1912" height="945" alt="image" src="https://github.com/user-attachments/assets/4bcc5515-dc60-4d81-94d1-09cea4776033" />
 
 
 
